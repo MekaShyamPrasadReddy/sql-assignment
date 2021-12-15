@@ -1,0 +1,262 @@
+                              ASSIGNMENT-I
+
+1. Write a query to list all the employees who are working as clerk
+                select ENAME
+                FROM EMP
+                WHERE JOB = 'CLERK';
+2. Write a query to list the employees who are working as clerks or managers
+               SELECT ENAME
+               FROM EMP
+               WHERE JOB IN('CLERK','MANAGER');
+3. Write a query to get the current date
+               select getdate()
+4. Write a query to list the employees whose salaries are within the range of 500 and 1000
+               select ename,sal
+               from emp
+               where sal between 500 and 1000;
+5. Write a query to list the employees who have joined in the month of December
+               SELECT ename,hiredate
+               from emp
+               where month(hiredate) like'12';
+6. Write a query to list the employees whose salaries are not within  the range of 1000 and 2500
+              select ename,SAL
+              from EMP
+              WHERE SAL NOT BETWEEN 1000 AND 2500;
+
+7. Write a query who are getting 800, 950, 3000,5000
+         select ename,SAL
+         from EMP
+         WHERE SAL IN (800,950,3000,5000)
+8. To list all the employees whose names are having ‘L’ as second character
+         select ename,SAL
+        from EMP 
+         WHERE ENAME LIKE '_L%'
+ 
+9. To list all the employees whose names are having ‘D’ as last character 
+           select ename,SAL
+           from EMP
+            WHERE ENAME LIKE '%D'
+10. To list all the employees whose names are having just 5 characters as length?
+          select ename
+          from EMP
+          WHERE LEN(ENAME)=5;
+ 
+11. To list all the employees whose names are starting with ‘T’ and ending with ‘R’ 
+             select ename
+             from EMP
+             WHERE ENAME LIKE 'T%_R';
+12. Display those employees who's name contains "A"?
+             select ename
+             from EMP
+              WHERE ENAME LIKE '%A%';
+
+14. What is the employee number of 'James'
+             SELECT EMPNO,ENAME
+             FROM EMP
+             WHERE ENAME='JAMES';
+15. What is the salary of 'king'?
+             SELECT ENAME,SAL
+             FROM EMP
+             WHERE ENAME='KING';
+16. Who is the President for organization?
+              SELECT ENAME,JOB
+              FROM EMP
+              WHERE JOB ='PRESIDENT'
+17.  List all details of all the managers?
+           SELECT *
+           FROM EMP
+           WHERE JOB='MANAGER'
+18. Give employee details for employees drawing commission?
+          SELECT *
+          FROM EMP
+          WHERE COMM>0;
+19. List employees who joined before april-1981?
+          SELECT ENAME,HIREDATE
+          FROM EMP
+          WHERE HIREDATE<'1981-04-01';
+20,21 What is the salary of following: 
+      King, Blake, Ford, Smith
+          SELECT SAL,ENAME
+          FROM EMP 
+          WHERE ENAME IN ('KING','FORD','SMITH'); 
+22. Who is drawing salary less than 3500
+          SELECT ENAME,SAL
+          FROM EMP
+          WHERE SAL<3500;
+23. List the details of all the clerks
+          SELECT *
+          FROM EMP
+          WHERE JOB LIKE 'CLERK';
+24. what is the annual salary for each the employees
+          SELECT SAL*12 AS ANNUALSAL,ENAME
+          FROM EMP
+25. if there is a hike in monthly salary by 20% for ford, what will be his annual Salary
+          SELECT ((SAL*20)/100*12) AS ANNUALSAL,ENAME
+          FROM EMP
+          WHERE ENAME='FORD';
+26. What is the total salary for each department
+          SELECT DEPTNO,SUM(SAL) AS TOTALSAL
+          FROM EMP
+          GROUP BY DEPTNO;
+27. Who is drawing the lowest salary in dept 10
+          SELECT ENAME,SAL,DEPTNO
+          FROM EMP
+          WHERE SAL=
+                    (SELECT MIN(SAL)
+		   FROM EMP
+		   WHERE DEPTNO=10);
+28. What is the average salary for Managers
+           SELECT JOB, AVG(SAL) AS AVGSAL
+           FROM EMP
+           WHERE JOB LIKE 'MANAGER'
+           GROUP BY JOB;
+29. What is the total salary for salesman
+           SELECT JOB, SUM(SAL) AS SUMSAL
+           FROM EMP
+           WHERE JOB LIKE 'SALESMAN'
+           GROUP BY JOB;
+30. Which department is having the lowest average salary?
+            SELECT AVG(SAL) AS AVERAGESAL,DNAME
+            FROM EMP,DEPT
+            GROUP BY DNAME
+31. How many persons are in each role
+               SELECT COUNT( JOB) AS ROLE,JOB
+               FROM EMP
+               GROUP BY JOB;
+32. What is the highest salary among analyst
+               SELECT MAX(SAL) AS HIGHSAL,JOB
+               FROM EMP
+               WHERE JOB IN ('ANALYST')
+               GROUP BY JOB;
+33. What is the highest commission paid
+               SELECT MAX(COMM) AS HIGHCOMM
+               FROM EMP;
+34. How many departments are there
+               SELECT COUNT(DISTINCT DNAME) AS NBRDEPT
+               FROM DEPT;
+35. List the names in which 3rd  character is L
+               SELECT ENAME
+               FROM EMP
+               WHERE ENAME LIKE '__L%'
+
+
+
+                               ASSIGNMENT-II
+
+
+
+1. List the department without any employees in it.
+             SELECT EMP.DEPTNO,DNAME
+              FROM EMP,DEPT
+              WHERE EMPNO IS NULL
+2. List the name and job of the employees who does not report to anybody.
+             SELECT ENAME,JOB
+             FROM EMP
+             WHERE COMM IS NULL ;
+
+3. Write a query that will give you the names and jobs of all employees in New York with a commission above 1000
+             SELECT ENAME,JOB
+             FROM EMP,DEPT
+             WHERE COMM>1000 AND LOC LIKE 'NEWYORK';
+4. How many employees work in Chicago?
+             SELECT COUNT(EMPNO)
+             FROM EMP,DEPT
+             WHERE LOC LIKE 'CHICAGO';
+5. Which employees work in Chicago?
+            SELECT *
+            FROM EMP,DEPT
+            WHERE LOC LIKE 'CHICAGO';
+6. List the employees’ names and cities in which they work. Order the list by city.
+            SELECT ENAME,LOC
+            FROM EMP,DEPT
+            ORDER BY LOC;
+7. Find the number of employees and number of departments.
+            SELECT COUNT(DISTINCT EMPNO) AS NOOFEMP,COUNT(DISTINCT DEPTNO) AS NOOFDEPT
+            FROM EMP;
+8. Display the employees who were hired before their managers.
+            SELECT e.ENAME,e.HIREDATE,m.ENAME,m.hIREDATE
+            FROM EMP e,EMP m
+            WHERE E.EMPNO=m.MGR and e.HIREDATE<m.HIREDATE;
+
+9. Determine the number of managers without listing them.
+             SELECT COUNT(MGR) AS NOOFMGR
+             FROM EMP;
+10. Display the name and title of all employees who do not have a manager.
+             SELECT ENAME,JOB
+             FROM EMP
+             WHERE MGR IS NULL;
+11. Create a query to display the employee name and department number for employee SMITH.
+             SELECT ENAME,DEPTNO
+             FROM EMP
+             WHERE ENAME LIKE 'SMITH';
+12. Display the salesmen who are not in Boston
+             SELECT *
+             FROM EMP,DEPT
+             WHERE LOC != 'BOSTON' AND JOB LIKE 'SALESMAN';
+13. List the details of the employees along with their location
+             SELECT EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DEPTNO,NULL AS LOC
+             FROM EMP
+             UNION
+             SELECT NULL,NULL,DNAME AS JOB ,NULL,NULL,NULL,NULL,DEPTNO,LOC
+             FROM DEPT;
+14. List the salesmen who are drawing salary less than Miller
+             SELECT ENAME,JOB
+             FROM EMP
+             WHERE JOB LIKE 'SALESMAN' AND SAL < (SELECT SAL
+                                      FROM EMP
+				       WHERE ENAME LIKE 'MILLER');
+15. Display the details of the employee working in Chicago
+                SELECT *
+                FROM EMP , DEPT
+                WHERE LOC LIKE 'CHICAGO';
+16. Find the names of all employees whose salaries are greater than the minimum salary for the Manager
+                SELECT ENAME 
+                FROM  EMP
+                WHERE SAL > (SELECT MIN(SAL)
+                             FROM EMP
+                             WHERE JOB LIKE'MANAGER' );
+
+17. Select the last name and job id from all employees whose department id is equal to Accounting.
+                     SELECT ENAME,EMPNO
+                     FROM EMP , DEPT
+                     WHERE DNAME LIKE 'ACCOUNTING';
+18. Display those emp who are working as manager
+                    SELECT *
+                    FROM EMP
+                    WHERE JOB LIKE 'MANAGER';
+19. write a subquery using case statement to display non sales if department is not sales
+                    SELECT JOB,SAL,
+                    CASE
+                    WHEN JOB != 'SALES'
+                    THEN 'NONSALES'
+                    WHEN SAL>1000 
+                    THEN 1000
+                    ELSE 'NULL'
+                    END 
+                    FROM EMP;                  
+If salary of an employee is more than 1000, then display salary otherwise display 1000
+
+20. Display salary as low, medium high based on salary range
+Less than 1000 less
+1000 to 2500 medium
+More than 2500 high
+
+                   SELECT SAL  AS LOW
+                   FROM EMP
+                   WHERE SAL<(SELECT SAL
+                              FROM EMP
+			      WHERE SAL=1000) 
+                    UNION
+                              SELECT SAL AS MEDIUM 
+                              FROM EMP
+                              WHERE SAL=(SELECT SAL
+                              FROM EMP
+		              WHERE SAL BETWEEN 1000 AND 2500) 
+                      UNION
+                              SELECT SAL AS HIGH 
+                              FROM EMP
+                              WHERE SAL>(SELECT SAL
+                              FROM EMP
+		              WHERE SAL=2500);   
+
+
